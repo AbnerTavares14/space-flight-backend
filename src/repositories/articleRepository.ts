@@ -1,6 +1,7 @@
-import { articles } from "@prisma/client";
 import prisma from "../config/db.js";
 import { CreateArticle } from '../services/articleService.js';
+
+
 
 async function getArticles(skip?: number, limit?: number) {
     return prisma.articles.findMany({
@@ -8,6 +9,16 @@ async function getArticles(skip?: number, limit?: number) {
         take: limit,
         orderBy: {
             id: 'asc'
+        }
+    });
+}
+
+async function getArticlesByDate(skip?: number, limit?: number, order?: any) {
+    return prisma.articles.findMany({
+        skip: skip,
+        take: limit,
+        orderBy: {
+            publishedAt: order
         }
     });
 }
@@ -20,7 +31,19 @@ async function getArticleById(id: number) {
     });
 }
 
-async function getArticleByTitle(title: string) {
+async function getArticleByTitle(title: string, skip: number, take: number) {
+    return prisma.articles.findMany({
+        skip,
+        take,
+        where: {
+            title: {
+                contains: title
+            }
+        }
+    });
+}
+
+async function checkTitleExist(title: string) {
     return prisma.articles.findFirst({
         where: {
             title
@@ -47,7 +70,9 @@ const articleRepository = {
     getArticleById,
     insert,
     getArticleByTitle,
-    deleteArticle
+    deleteArticle,
+    getArticlesByDate,
+    checkTitleExist
 };
 
 export default articleRepository;

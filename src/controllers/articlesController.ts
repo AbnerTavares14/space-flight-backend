@@ -36,3 +36,17 @@ export async function deleteArticle(req: Request, res: Response) {
     await articleService.deleteArticle(+id);
     res.sendStatus(200);
 }
+
+export async function getArticleByDate(req: Request, res: Response) {
+    let { skip, limit } = req.query;
+    const { order } = req.params;
+    const articles = await articleService.getArticlesByDate(+skip, +limit, order);
+    res.status(200).send(articles);
+}
+
+export async function getArticleByTitle(req: Request, res: Response) {
+    let { skip, limit } = req.query;
+    const { title } = req.params;
+    const articles = await articleService.getArticleByTitle(+skip, +limit, title);
+    res.status(200).send(articles);
+}
