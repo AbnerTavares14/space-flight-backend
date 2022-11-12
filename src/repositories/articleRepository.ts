@@ -1,5 +1,5 @@
 import prisma from "../config/db.js";
-import { CreateArticle } from '../services/articleService.js';
+import { CreateArticle, updateArticle } from '../services/articleService.js';
 
 
 
@@ -65,6 +65,16 @@ async function deleteArticle(id: number) {
     });
 }
 
+async function updateArticle(data: updateArticle) {
+    console.log(data);
+    return prisma.articles.update({
+        where: {
+            id: data.id
+        },
+        data
+    });
+}
+
 const articleRepository = {
     getArticles,
     getArticleById,
@@ -72,7 +82,8 @@ const articleRepository = {
     getArticleByTitle,
     deleteArticle,
     getArticlesByDate,
-    checkTitleExist
+    checkTitleExist,
+    updateArticle
 };
 
 export default articleRepository;

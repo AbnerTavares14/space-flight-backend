@@ -44,6 +44,7 @@ async function loadData() {
             });
 
             const promises = articlesToUpdate.map(async (article) => {
+                delete article.updatedAt;
                 await prisma.articles.update({
                     data: article,
                     where: {

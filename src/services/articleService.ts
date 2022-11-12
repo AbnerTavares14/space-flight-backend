@@ -3,6 +3,7 @@ import articleRepository from '../repositories/articleRepository.js';
 import { articles } from "@prisma/client";
 
 export type CreateArticle = Omit<articles, "publishedAt" | "updatedAt">;
+export type updateArticle = articles
 
 async function getArticles(skip?: number, take?: number) {
     const querys = aux(skip, take);
@@ -12,6 +13,9 @@ async function getArticles(skip?: number, take?: number) {
 
 async function getArticleById(id: number) {
     const article = await articleRepository.getArticleById(id);
+    if (!article) {
+        throw handlerError.notFoundError();
+    }
     return article;
 }
 
@@ -23,6 +27,14 @@ async function getArticleByTitle(skip?: number, take?: number, title?: string) {
     const articles = await articleRepository.getArticleByTitle(title, querys.defaultSkip, querys.defaultLimit);
     return articles;
 
+}
+
+async function updateArticle(article: updateArticle) {
+    const articleExist = await articleRepository.getArticleById(article.id);
+    if (!articleExist) {
+        throw handlerError.notFoundError();
+    }
+    await articleRepository.updateArticle(article);
 }
 
 function aux(skip?: number, take?: number) {
@@ -81,7 +93,8 @@ const articleService = {
     insertArticle,
     deleteArticle,
     getArticlesByDate,
-    getArticleByTitle
+    getArticleByTitle,
+    updateArticle
 };
 
 export default articleService;

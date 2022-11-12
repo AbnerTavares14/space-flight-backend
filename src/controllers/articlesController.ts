@@ -50,3 +50,9 @@ export async function getArticleByTitle(req: Request, res: Response) {
     const articles = await articleService.getArticleByTitle(+skip, +limit, title);
     res.status(200).send(articles);
 }
+
+export async function update(req: Request, res: Response) {
+    const { id, featured, title, url, imageUrl, newsSite, summary, launches, events, publishedAt, updatedAt } = req.body;
+    await articleService.updateArticle({ id, featured, title, url, imageUrl, newsSite, summary, publishedAt, updatedAt, launches, events });
+    res.sendStatus(200);
+}
