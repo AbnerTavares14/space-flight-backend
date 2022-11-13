@@ -4,7 +4,7 @@ import loadData from '../script/loadData.js';
 
 const cronScheduler = () => {
     if (process.env.NODE_ENV !== 'test') {
-        cron.schedule('4 16 * * *', async () => {
+        cron.schedule('* 9 * * *', async () => {
             console.log('------------------');
             console.log('Running CRON job');
             await loadData();

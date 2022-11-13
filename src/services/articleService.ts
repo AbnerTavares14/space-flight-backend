@@ -58,24 +58,18 @@ async function insertArticle(id: number, featured?: boolean, title?: string, url
     const checkTitle = await articleRepository.checkTitleExist(title);
     const checkId = await articleRepository.getArticleById(id);
     if (checkTitle || checkId) {
+        console.log("entrou")
         throw handlerError.conflict();
     }
     await articleRepository.insert(data);
 }
 
-async function getArticlesByDate(skip?: number, take?: number, order?: string) {
-    const defaultSkip = 0;
-    const defaultLimit = 10;
+async function getArticlesByDate(order: string, skip?: number, take?: number) {
+    const querys = aux(skip, take);
     if (order !== 'asc' && order !== 'desc') {
         throw handlerError.unprocessableEntity();
     }
-    if (!skip) {
-        skip = defaultSkip;
-    }
-    if (!take) {
-        take = defaultLimit;
-    }
-    const articles = await articleRepository.getArticlesByDate(skip, take, order);
+    const articles = await articleRepository.getArticlesByDate(querys.defaultSkip, querys.defaultLimit, order);
     return articles;
 }
 

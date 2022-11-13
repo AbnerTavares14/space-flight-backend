@@ -8,7 +8,7 @@ const articleSchema = Joi.object<articles>({
     url: Joi.string().required(),
     imageUrl: Joi.string().required(),
     newsSite: Joi.string().required(),
-    summary: Joi.string().required(),
+    summary: Joi.string().min(0),
     launches: Joi.object(),
     events: Joi.object()
 });

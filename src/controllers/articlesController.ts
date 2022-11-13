@@ -40,7 +40,10 @@ export async function deleteArticle(req: Request, res: Response) {
 export async function getArticleByDate(req: Request, res: Response) {
     let { skip, limit } = req.query;
     const { order } = req.params;
-    const articles = await articleService.getArticlesByDate(+skip, +limit, order);
+    if (!order) {
+        throw handlerError.unprocessableEntity();
+    }
+    const articles = await articleService.getArticlesByDate(order, +skip, +limit);
     res.status(200).send(articles);
 }
 
