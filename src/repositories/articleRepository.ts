@@ -67,7 +67,6 @@ async function deleteArticle(id: number) {
 }
 
 async function updateArticle(data: updateArticle) {
-    console.log(data);
     return prisma.articles.update({
         where: {
             id: data.id

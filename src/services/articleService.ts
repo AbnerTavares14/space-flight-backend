@@ -55,7 +55,6 @@ async function insertArticle(id: number, featured?: boolean, title?: string, url
     const checkTitle = await articleRepository.checkTitleExist(title);
     const checkId = await articleRepository.getArticleById(id);
     if (checkTitle || checkId) {
-        console.log("entrou")
         throw handlerError.conflict();
     }
     await articleRepository.insert(data);

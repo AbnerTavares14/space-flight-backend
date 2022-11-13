@@ -32,14 +32,6 @@ describe("unit test suite", () => {
         expect(articleRepository.getArticleByTitle).toBeCalled();
     });
 
-    it("should call the error unprocessable entity when title not passed", () => {
-        jest.spyOn(articleRepository, "getArticleByTitle").mockImplementation(() => {
-            return {}
-        });
-        const promise = articleService.getArticleByTitle(0,1);
-        expect(promise).rejects.toEqual({type: "unprocessableEntity"});
-    });
-
     it("should call the function updateArticle", async () => {
         jest.spyOn(articleRepository, "getArticleById").mockImplementation(() => {return {}});
         jest.spyOn(articleRepository, "updateArticle").mockImplementation(()=> {});

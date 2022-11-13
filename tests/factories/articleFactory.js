@@ -7,7 +7,7 @@ function generateArticle() {
     const imageUrl = faker.image.cats();
     const newsSite = faker.random.word();
     const summary = faker.lorem.lines();
-    return {id, featured: false, title, url, imageUrl, newsSite, summary, launches: {}, events: {}};
+    return {id, featured: false, title, url, imageUrl, newsSite, summary, launches: [], events: []};
 }
 
 export const articleFactory = {
