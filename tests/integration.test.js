@@ -1,7 +1,6 @@
 import request from 'supertest';
 import app from '../src/app.js';
 import prisma from '../src/config/db.js';
-import jest from 'jest';
 import {articleFactory} from './factories/articleFactory.js';
 import dotenv from 'dotenv';
 
@@ -51,7 +50,6 @@ describe("testing api endpoints", () => {
 
     it("[GET] /article/title/:title - should be able to get article by title", async () => {
         const response = await request(app).get(`/articles/title/${data.title}`).expect(200);
-        console.log(response.body);
         expect(response.body[0].title).toBe(data.title);
     });
 
