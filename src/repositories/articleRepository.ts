@@ -37,7 +37,8 @@ async function getArticleByTitle(title: string, skip: number, take: number) {
         take,
         where: {
             title: {
-                contains: title
+                contains: title,
+                mode: 'insensitive'
             }
         }
     });

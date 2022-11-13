@@ -50,7 +50,10 @@ export async function getArticleByDate(req: Request, res: Response) {
 export async function getArticleByTitle(req: Request, res: Response) {
     let { skip, limit } = req.query;
     const { title } = req.params;
-    const articles = await articleService.getArticleByTitle(+skip, +limit, title);
+    if (!title) {
+        throw handlerError.unprocessableEntity();
+    }
+    const articles = await articleService.getArticleByTitle(title, +skip, +limit);
     res.status(200).send(articles);
 }
 

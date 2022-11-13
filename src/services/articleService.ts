@@ -19,10 +19,7 @@ async function getArticleById(id: number) {
     return article;
 }
 
-async function getArticleByTitle(skip?: number, take?: number, title?: string) {
-    if (!title) {
-        throw handlerError.unprocessableEntity();
-    }
+async function getArticleByTitle(title: string, skip?: number, take?: number) {
     const querys = aux(skip, take);
     const articles = await articleRepository.getArticleByTitle(title, querys.defaultSkip, querys.defaultLimit);
     return articles;
